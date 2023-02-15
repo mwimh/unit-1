@@ -116,22 +116,21 @@ function addEvents() {
 };
 
 
-// create function to be used later that displays the .json file on the webpage
-function debugCallback(response) {
-    // finds 'mydiv' in the html document and adds text and the .json file converted to a string
-    document.querySelector("#mydiv").insertAdjacentHTML('beforeend', '<br>GeoJSON data: <br>' + JSON.stringify(response))
-};
 
 // Creates a function that fetches and converts the MegaCities file to a usuable .json file
 function debugAjax() {
-    // fetches the data specified, the MegaCities.geojson file stored in the 'data' folder
+    // Fetches the data specified, the MegaCities.geojson file stored in the 'data' folder
     fetch("data/MegaCities.geojson")
-        // after the data is retrieved, a function is run to convert the data into a .json file and the converted data is returned as the variable 'response'
+        // After the data is retrieved, a function is run to convert the data into a .json file and the converted data is returned as the variable 'response'
         .then(function (response) {
+           // Converts the .geojson file to a .json file
             return response.json()
         })
-        // After the conversion is run, the callback function is run to insert the data into the HTML code
-        .then(debugCallback);
+        // After the conversion is run, a function is run to insert the data into the HTML code to display. A callback function would be used here instead of an anonymous function if the data were to be used elsewhere, however, in this case it is only used here.
+        .then(function (response) {
+            // Finds 'mydiv' in the html document and adds line breaks, text, and the .json file converted to a string
+            document.querySelector("#mydiv").insertAdjacentHTML('beforeend', '<br>GeoJSON data: <br>' + JSON.stringify(response))
+        });
 };
 
 // When the DOM content is fully loaded, run the cities function defined earlier
